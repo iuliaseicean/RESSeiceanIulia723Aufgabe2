@@ -1,15 +1,36 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import controller.CharakterController;
+import controller.ProduktController;
+import model.Produkt;
+import repository.CharakterRepository;
+import repository.ProduktRepository;
+
+import java.util.List;
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        ProduktRepository produktRepo = new ProduktRepository();
+        CharakterRepository charakterRepo = new CharakterRepository();
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
+
+        ProduktController produktController = new ProduktController(produktRepo); // Constructor cu argument
+        CharakterController charakterController = new CharakterController(charakterRepo, produktRepo);
+
+        Scanner scanner = new Scanner(System.in);
+        int choice;
+
+        do {
+            System.out.println("\nMain Menu:");
+            System.out.println("1. Manage Produkte");
+            System.out.println("2. Manage Charakters");
+            System.out.println("0. Exit");
+            System.out.print("Enter your choice: ");
+            choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1 -> produktController.run();
+                case 2 -> charakterController.run();
+            }
+        } while (choice != 0);
     }
 }
